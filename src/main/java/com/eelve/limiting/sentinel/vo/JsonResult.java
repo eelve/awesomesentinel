@@ -88,7 +88,7 @@ public class JsonResult<T> implements Serializable {
     public static JsonResult error() {
         JsonResult result = new JsonResult();
         result.setCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
-        result.setMsg("熔断错误");
+        result.setMsg("默认失败");
         return result;
     }
 
