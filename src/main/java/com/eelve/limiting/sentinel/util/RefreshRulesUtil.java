@@ -22,7 +22,7 @@ public class RefreshRulesUtil {
 
     public static <T extends AbstractRule> void refreshRule(List<T> ruleList, RulesEnum rulesEnum){
 
-        log.info("操作类型"+rulesEnum.getCode() + "ruleList " + ruleList.toString());
+        log.info("操作类型:"+rulesEnum.getCode() + ",ruleList:" + ruleList.toString());
 
         switch (rulesEnum){
             case Flow:
