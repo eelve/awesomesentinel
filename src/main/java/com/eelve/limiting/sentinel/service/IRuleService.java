@@ -9,4 +9,8 @@ public interface IRuleService {
     List<FlowRuleEntity> allRules();
 
     FlowRuleEntity addRule(FlowRuleEntity flowRuleEntity);
+
+    FlowRuleEntity updateRule(FlowRuleEntity flowRuleEntity);
+
+    void deleteRuleById(int id);
 }

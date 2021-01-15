@@ -1,1 +1,1 @@
-com.eelve.limiting.sentinel.config.RuleInitFunc
+com.eelve.limiting.sentinel.config.DataSourceInitFunc

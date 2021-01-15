@@ -35,7 +35,7 @@ public class RuleInitFunc implements InitFunc {
         FlowRule rule1 = new FlowRule();
         rule1.setResource("allInfos");
         // Set max qps to 2
-        rule1.setCount(0);
+        rule1.setCount(2);
         rule1.setGrade(RuleConstant.FLOW_GRADE_QPS);
         rule1.setLimitApp("default");
         rules.add(rule1);

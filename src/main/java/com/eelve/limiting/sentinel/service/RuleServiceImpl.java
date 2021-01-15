@@ -25,4 +25,14 @@ public class RuleServiceImpl implements IRuleService{
     public FlowRuleEntity addRule(FlowRuleEntity flowRuleEntity) {
         return flowRuleDao.save(flowRuleEntity);
     }
+
+    @Override
+    public FlowRuleEntity updateRule(FlowRuleEntity flowRuleEntity) {
+        return flowRuleDao.save(flowRuleEntity);
+    }
+
+    @Override
+    public void deleteRuleById(int id) {
+        flowRuleDao.deleteById(id);
+    }
 }
