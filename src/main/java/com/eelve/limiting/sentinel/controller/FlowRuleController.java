@@ -6,7 +6,6 @@ import com.eelve.limiting.sentinel.enums.RulesEnum;
 import com.eelve.limiting.sentinel.service.RuleServiceImpl;
 import com.eelve.limiting.sentinel.util.RefreshRulesUtil;
 import com.eelve.limiting.sentinel.vo.JsonResult;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
