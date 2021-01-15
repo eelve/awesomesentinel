@@ -40,7 +40,6 @@ public class RuleInitFunc implements InitFunc {
         rule1.setLimitApp("default");
         rules.add(rule1);
         FlowRuleManager.loadRules(rules);
-        System.out.printf(FlowRuleManager.getRules().toString());
     }
 
     /**
@@ -56,7 +55,6 @@ public class RuleInitFunc implements InitFunc {
                 .setTimeWindow(10);
         rules.add(rule);
         DegradeRuleManager.loadRules(rules);
-        System.out.printf(DegradeRuleManager.getRules().toString());
     }
 
     /**
@@ -68,6 +66,5 @@ public class RuleInitFunc implements InitFunc {
         rule.setHighestSystemLoad(10);
         rules.add(rule);
         SystemRuleManager.loadRules(rules);
-        System.out.printf(SystemRuleManager.getRules().toString());
     }
 }
