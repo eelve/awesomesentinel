@@ -90,4 +90,6 @@ public class RuleInitFunc implements InitFunc {
 }
 ~~~
 
+核心代码是使用api`RuleManager.loadRules(rules);`
+
 然后在`META-INF/services`中添加`com.alibaba.csp.sentinel.init.InitFunc`配置刚刚实现InitFunc接口的全类名反写`com.eelve.limiting.sentinel.config.RuleInitFunc`。
