@@ -5,11 +5,6 @@
 ~~~pom
 <dependency>
     <groupId>com.alibaba.csp</groupId>
-    <artifactId>sentinel-core</artifactId>
-    <version>1.8.0</version>
-</dependency>
-<dependency>
-    <groupId>com.alibaba.csp</groupId>
     <artifactId>sentinel-annotation-aspectj</artifactId>
     <version>1.8.0</version>
 </dependency>
@@ -19,6 +14,8 @@
     <version>1.8.0</version>
 </dependency>
 ~~~
+
+> sentinel-annotation-aspectj包含sentinel-core，所以不需要单独引入
 
 ## 2.配置支持注解
 
