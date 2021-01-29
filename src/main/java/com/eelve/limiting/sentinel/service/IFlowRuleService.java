@@ -4,7 +4,7 @@ import com.eelve.limiting.sentinel.entity.FlowRuleEntity;
 
 import java.util.List;
 
-public interface IRuleService {
+public interface IFlowRuleService {
 
     List<FlowRuleEntity> allRules();
 
