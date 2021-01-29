@@ -4,6 +4,7 @@ package com.eelve.limiting.sentinel.controller;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
+import com.eelve.limiting.sentinel.config.SentinelResourceFactory;
 import com.eelve.limiting.sentinel.exception.BaseException;
 import com.eelve.limiting.sentinel.exception.ProgramException;
 import com.eelve.limiting.sentinel.vo.JsonResult;
@@ -32,6 +33,7 @@ public class SentinelController {
     //@SentinelResource(value = "allInfos",fallback = "errorReturn")
     @SentinelResource(value = "allInfos")
     public JsonResult allInfos(HttpServletRequest request, HttpServletResponse response, @RequestParam Integer num){
+        log.info("SentinelResourceFactory----->" + SentinelResourceFactory.getSentinelResource().toString());
         log.info("param----->" + num);
         log.info("rule" + FlowRuleManager.getRules().toString());
         try {
