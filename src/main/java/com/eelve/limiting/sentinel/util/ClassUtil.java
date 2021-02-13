@@ -16,7 +16,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
- * @ClassName ClassuUils
+ * @ClassName ClassuUil
  * @Description TODO
  * @Author zhao.zhilue
  * @Date 2021/2/13 19:01
