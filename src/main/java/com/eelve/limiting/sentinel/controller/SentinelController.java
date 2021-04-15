@@ -25,8 +25,10 @@ import javax.servlet.http.HttpServletResponse;
 public class SentinelController {
 
     /**
-     * blockHandler = "errorReturn" 熔断
-     * fallback = "errorReturn" 限流
+     * blockHandler = "errorReturn" 熔断 降级时触发
+     * fallback = "errorReturn" 限流  发生异常时触发
+     *
+     * 只有COntroller层和Service层的直接第一层方法才能通过注解触发，如果是方法再调用普通方法需要勇SphO或者SphU原生写法
      */
     @RequestMapping("/get")
     @ResponseBody
