@@ -1,6 +1,9 @@
 package com.eelve.limiting.sentinel.controller;
 
 
+import com.alibaba.csp.sentinel.Entry;
+import com.alibaba.csp.sentinel.SphO;
+import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
@@ -30,36 +33,16 @@ public class SentinelController {
      *
      * 只有COntroller层和Service层的直接第一层方法才能通过注解触发，如果是方法再调用普通方法需要勇SphO或者SphU原生写法
      */
-    @RequestMapping("/get")
+    @RequestMapping("/sentinel")
     @ResponseBody
-    //@SentinelResource(value = "allInfos",fallback = "errorReturn")
-    @SentinelResource(value = "allInfos")
-    public JsonResult allInfos(HttpServletRequest request, HttpServletResponse response, @RequestParam Integer num){
+    //@SentinelResource(value = "sentinel",fallback = "errorReturn")
+    @SentinelResource(value = "sentinel")
+    public JsonResult sentinel(HttpServletRequest request, HttpServletResponse response, @RequestParam Integer num){
         log.info("SentinelResourceFactory----->" + SentinelResourceFactory.getSentinelResource().toString());
         log.info("param----->" + num);
         log.info("rule" + FlowRuleManager.getRules().toString());
         try {
-            //Thread.sleep(num);
-
-            if (num % 2 == 0) {
-                log.info("num % 2 == 0");
-                throw new BaseException("something bad with 2", 400);
-            }
-
-            if (num % 3 == 0) {
-                log.info("num % 3 == 0");
-                throw new BaseException("something bad whitch 3", 400);
-            }
-
-            if (num % 5 == 0) {
-                log.info("num % 5 == 0");
-                throw new ProgramException("something bad whitch 5", 400);
-            }
-
-            if (num % 7 == 0) {
-                log.info("num % 7 == 0");
-                int res = 1 / 0;
-            }
+            extracted(num);
             return JsonResult.ok();
         } catch (ProgramException e) {
             log.info("error");
@@ -67,6 +50,123 @@ public class SentinelController {
         }
     }
 
+    @RequestMapping("/sentinelSphO")
+    @ResponseBody
+    @SentinelResource(value = "sentinelSphO")
+    public JsonResult sentinelSphO(HttpServletRequest request, HttpServletResponse response, @RequestParam Integer num){
+        log.info("SentinelResourceFactory----->" + SentinelResourceFactory.getSentinelResource().toString());
+        log.info("param----->" + num);
+        log.info("rule" + FlowRuleManager.getRules().toString());
+        try {
+            extractedSphO(num);
+            return JsonResult.ok();
+        } catch (ProgramException e) {
+            log.info("error");
+            return JsonResult.error("error");
+        }
+    }
+
+    @RequestMapping("/sentinelSphU")
+    @ResponseBody
+    public JsonResult sentinelSphU(HttpServletRequest request, HttpServletResponse response, @RequestParam Integer num){
+        log.info("SentinelResourceFactory----->" + SentinelResourceFactory.getSentinelResource().toString());
+        log.info("param----->" + num);
+        log.info("rule" + FlowRuleManager.getRules().toString());
+        try {
+            extractedSphU(num);
+            return JsonResult.ok();
+        } catch (ProgramException e) {
+            log.info("error");
+            return JsonResult.error("error");
+        }
+    }
+
+    @SentinelResource(value = "extracted",blockHandler = "extractedHandler")
+    public void extracted(Integer num) {
+
+        if (num % 2 == 0) {
+            log.info("num % 2 == 0");
+            throw new BaseException("something bad with 2", 400);
+        }
+
+        if (num % 3 == 0) {
+            log.info("num % 3 == 0");
+            throw new BaseException("something bad with 3", 400);
+        }
+
+        if (num % 5 == 0) {
+            log.info("num % 5 == 0");
+            throw new ProgramException("something bad with 5", 400);
+        }
+
+        if (num % 7 == 0) {
+            log.info("num % 7 == 0");
+            int res = 1 / 0;
+        }
+    }
+
+    private void extractedHandler(Integer num,BlockException blockException) {
+        log.info("something bad with blockException");
+        throw new ProgramException("something bad with blockException", 400);
+    }
+
+    private void extractedSphO(Integer num) {
+        if (SphO.entry("extractedSphO")){
+            try {
+                if (num % 2 == 0) {
+                    log.info("num % 2 == 0");
+                    throw new BaseException("something bad with 2", 400);
+                }
+
+                if (num % 3 == 0) {
+                    log.info("num % 3 == 0");
+                    throw new BaseException("something bad with 3", 400);
+                }
+
+                if (num % 5 == 0) {
+                    log.info("num % 5 == 0");
+                    throw new ProgramException("something bad with 5", 400);
+                }
+
+                if (num % 7 == 0) {
+                    log.info("num % 7 == 0");
+                    int res = 1 / 0;
+                }
+            }finally {
+                SphO.exit();
+            }
+        }else {
+            log.info("something bad with blockException");
+            throw new ProgramException("something bad with blockException", 400);
+        }
+    }
+
+    private void extractedSphU(Integer num) {
+        try (Entry entry = SphU.entry("extractedSphU")) {
+            if (num % 2 == 0) {
+                log.info("num % 2 == 0");
+                throw new BaseException("something bad with 2", 400);
+            }
+
+            if (num % 3 == 0) {
+                log.info("num % 3 == 0");
+                throw new BaseException("something bad with 3", 400);
+            }
+
+            if (num % 5 == 0) {
+                log.info("num % 5 == 0");
+                throw new ProgramException("something bad with 5", 400);
+            }
+
+            if (num % 7 == 0) {
+                log.info("num % 7 == 0");
+                int res = 1 / 0;
+            }
+        } catch (BlockException ex) {
+            log.info("something bad with blockException");
+            throw new ProgramException("something bad with blockException", 400);
+        }
+    }
     /**
      * 限流，参数需要和方法保持一致
      * @param request
